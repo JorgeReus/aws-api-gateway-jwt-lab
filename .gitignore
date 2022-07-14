@@ -1,4 +1,4 @@
 .terraform/
+.task/
 terraform.tfstate*
 *.zip
-authorizer

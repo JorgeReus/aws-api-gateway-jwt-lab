@@ -1,0 +1,65 @@
+version: '3'
+
+tasks:
+  build-authorizer:
+    desc: Build the authorizer binary for AWS lambda
+    cmds:
+      - task: go-test
+        vars: {DIR: ./src/authorizer}
+      - task: go-build-lambda
+        vars: {NAME: authorizer, DIR: ./src/authorizer/cmd/lambda}
+    sources:
+      - ./src/authorizer/**/*.go
+    generates:
+      - ./src/authorizer/cmd/lambda/authorizer
+
+  go-test:
+    desc: Test a golang module by providing it's root
+    dir: "{{.DIR}}"
+    cmds:
+      - go test -v ./... -coverprofile=coverage.out
+      - go tool cover -html=coverage.out   
+
+  go-build-lambda:
+    desc: Builds a golang binary suitable for AWS lambda
+    dir: "{{.DIR}}"
+    cmds:
+      - GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o {{.NAME}}
+
+  deploy-terraform:
+    dir: ./terraform
+    cmds:
+      - terraform init
+      - terraform apply
+
+  get-valid-jwt:
+    dir: ./src/authorizer/cmd/jwt_client
+    cmds:
+      - go run . valid
+
+  get-invalid-jwt:
+    dir: ./src/authorizer/cmd/jwt_client
+    cmds:
+      - go run . invalid
+
+  tearup:
+    desc: This destroy all related terraform resources with this dir, be sure to have the correct AWS credentials configured
+    dir: ./terraform
+    cmds:
+      - terraform destroy --auto-approve
+
+  setup:
+    desc: This will create the related terraform resources with this dir, be sure to have the correct AWS credentials configured
+    cmds:
+      - task: build-authorizer
+      - task: deploy-terraform
+
+  get-apigw-url:
+    dir: ./terraform
+    cmds:
+      - terraform output -json | jq -j '.url.value'
+
+  docs:
+    desc: Start structurizr server to display docs
+    cmds:
+      - docker run -it --rm -p 8080:8080 -v $(pwd):/usr/local/structurizr structurizr/lite

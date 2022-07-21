@@ -49,3 +49,8 @@ tasks:
     dir: ./terraform
     cmds:
       - terraform output -json | jq -j '.url.value'
+
+  docs:
+    desc: Start structurizr server to display docs
+    cmds:
+      - docker run -it --rm -p 8080:8080 -v $(pwd):/usr/local/structurizr structurizr/lite

@@ -32,10 +32,15 @@ tasks:
       - terraform init
       - terraform apply
 
-  get-user-jwt:
+  get-valid-jwt:
     dir: ./src/authorizer/cmd/jwt_client
     cmds:
-      - go run . admin
+      - go run . valid
+
+  get-invalid-jwt:
+    dir: ./src/authorizer/cmd/jwt_client
+    cmds:
+      - go run . invalid
 
   tearup:
     desc: This destroy all related terraform resources with this dir, be sure to have the correct AWS credentials configured
@@ -53,3 +58,8 @@ tasks:
     dir: ./terraform
     cmds:
       - terraform output -json | jq -j '.url.value'
+
+  docs:
+    desc: Start structurizr server to display docs
+    cmds:
+      - docker run -it --rm -p 8080:8080 -v $(pwd):/usr/local/structurizr structurizr/lite

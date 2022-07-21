@@ -3,7 +3,7 @@ const apiHandler = (payload, context, callback) => {
     callback(null, {
         statusCode: 200,
         body: JSON.stringify({
-            message: 'Hello World'
+            message: 'You\'re authorized by a self signed JWK!'
         })
     }); 
 }

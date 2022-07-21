@@ -22,8 +22,20 @@ func main() {
 		log.Fatal(err)
 	}
 
+  if len(os.Args) < 2 {
+    log.Fatal("Type <invalid|valid> should be specified")
+  }
+  tokenType := os.Args[1]
+
 	subject := "email@example.com"
-	expiry := time.Now().Add(time.Minute).Unix()
+  var expiry int64
+  if tokenType == "invalid" {
+	  expiry = time.Now().Add(time.Microsecond).Unix()
+  } else if tokenType == "valid" {
+	  expiry = time.Now().Add(time.Minute).Unix()
+  } else {
+    log.Fatalf("Unkown %s type", tokenType)
+  }
 
 	hasher := sha256.New()
 	hasher.Write([]byte(fmt.Sprintf("%s-%d", subject, expiry)))

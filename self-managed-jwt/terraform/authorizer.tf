@@ -42,8 +42,6 @@ EOF
 
 resource "aws_iam_role" "authorizer_invocation_role" {
   name = "${var.authorizer_function_name}-invocation"
-  path = "/"
-
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -93,7 +91,7 @@ EOF
 
 resource "aws_api_gateway_authorizer" "this" {
   name                   = var.authorizer_function_name
-  rest_api_id            = data.aws_api_gateway_rest_api.this.id
+  rest_api_id            = aws_api_gateway_rest_api.this.id
   authorizer_uri         = aws_lambda_function.authorizer.invoke_arn
   authorizer_credentials = aws_iam_role.authorizer_invocation_role.arn
   # Disable cache

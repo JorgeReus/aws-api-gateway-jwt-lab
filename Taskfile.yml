@@ -1,0 +1,13 @@
+version: '3'
+
+tasks:
+  setup:
+    dir: base
+    cmds:
+      - terraform init
+      - terraform apply
+
+  tearup:
+    dir: base
+    cmds:
+      - terraform destroy --auto-approve

@@ -5,22 +5,22 @@ variable "aws_region" {
 
 variable "authorizer_function_name" {
   description = "The name of the authorizer function"
-  default     = "jwt_basic_authorizer"
+  default     = "jwt-basic-authorizer"
 }
 
 variable "api_gateway_name" {
   description = "The name of the API gateway to mount this example"
-  default     = "rest-jwt-lab"
+  default     = "selfsigned-jwk-rest-lab"
 }
 
 variable "example_function_name" {
   description = "The name of the example target function"
-  default     = "jwt_basic_example"
+  default     = "jwt-basic-example"
 }
 
 variable "lab_api_gw_resource_path" {
   description = "The path of the api gateway lab"
-  default     = "/lab"
+  default     = "lab"
 }
 
 variable "stage_name" {

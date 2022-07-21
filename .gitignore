@@ -2,3 +2,7 @@
 .task/
 terraform.tfstate*
 *.zip
+*.out
+bin/
+workspace.json
+.structurizr/

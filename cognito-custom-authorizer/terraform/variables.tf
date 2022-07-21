@@ -13,7 +13,7 @@ variable "api_gateway_name" {
 
 variable "lab_api_gw_resource_path" {
   description = "The path of the api gateway lab"
-  default     = "/lab"
+  default     = "lab"
 }
 
 variable "authorizer_name" {

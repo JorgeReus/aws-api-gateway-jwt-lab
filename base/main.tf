@@ -1,23 +1,9 @@
-resource "aws_api_gateway_rest_api" "this" {
-  name = var.rest_api_conf.name
-  description = var.rest_api_conf.description
-  tags = {
-    Name = var.rest_api_conf.name
-  }
-}
-
-resource "aws_api_gateway_resource" "lab" {
-  rest_api_id = aws_api_gateway_rest_api.this.id
-  parent_id = aws_api_gateway_rest_api.this.root_resource_id
-  path_part = var.lab_resource_conf.path
-}
-
 resource "aws_api_gateway_account" "this" {
   cloudwatch_role_arn = aws_iam_role.cloudwatch.arn
 }
 
 resource "aws_iam_role" "cloudwatch" {
-  name = "api_gateway_cloudwatch_global"
+  name = var.apigw_cloudwatch_role_name
 
   assume_role_policy = <<EOF
 {
@@ -37,7 +23,7 @@ EOF
 }
 
 resource "aws_iam_role_policy" "cloudwatch" {
-  name = "default"
+  name = var.apigw_cloudwatch_role_name
   role = aws_iam_role.cloudwatch.id
 
   policy = <<EOF

@@ -15,7 +15,7 @@ resource "aws_iam_role" "authorizer" {
   ]
 }
 EOF
-  
+
 }
 
 resource "aws_iam_role_policy" "authorizer_lambda_logging" {

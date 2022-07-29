@@ -1,3 +1,4 @@
+---
 policies:
   - type: commit
     spec:
@@ -5,12 +6,13 @@ policies:
         length: 89
         imperative: false
       body:
-        required: true
-      spellcheck:
-        locale: US
+        required: false
       maximumOfOneCommit: true
       conventional:
         types:
-          - "feat"
-          - "docs"
+          - feat
+          - docs
+          - fix
+          - test
+          - chore
         descriptionLength: 72

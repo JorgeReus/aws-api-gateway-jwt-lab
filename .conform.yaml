@@ -1,0 +1,16 @@
+policies:
+  - type: commit
+    spec:
+      header:
+        length: 89
+        imperative: false
+      body:
+        required: true
+      spellcheck:
+        locale: US
+      maximumOfOneCommit: true
+      conventional:
+        types:
+          - "feat"
+          - "docs"
+        descriptionLength: 72

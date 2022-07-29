@@ -1,0 +1,8 @@
+repos:
+  - repo: https://github.com/siderolabs/conform
+    rev: v0.1.0-alpha.26
+    hooks:
+      - id: conform
+        entry: 'conform enforce --commit-ref refs/heads/main --commit-msg-file'
+        stages:
+          - commit-msg
